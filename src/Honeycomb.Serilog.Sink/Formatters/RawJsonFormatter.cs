@@ -43,8 +43,11 @@ namespace Honeycomb.Serilog.Sink.Formatters
                 JsonValueFormatter.WriteQuotedJsonString(logEvent.Exception.GetType().ToString(), output);
                 output.Write(",\"exception.message\":");
                 JsonValueFormatter.WriteQuotedJsonString(logEvent.Exception.ToString(), output);
-                output.Write(",\"exception.stacktrace\":");
-                JsonValueFormatter.WriteQuotedJsonString(logEvent.Exception.StackTrace, output);
+                if (logEvent.Exception.StackTrace != null)
+                {
+                    output.Write(",\"exception.stacktrace\":");
+                    JsonValueFormatter.WriteQuotedJsonString(logEvent.Exception.StackTrace, output);
+                }
             }
 
             if (logEvent.Properties.Any())
